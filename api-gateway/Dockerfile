@@ -1,10 +1,16 @@
-FROM node:latest
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2
 
-LABEL "maintainer"="gautur16@ru.is""benediktt16@ru.is"
+LABEL "maintainer"="gautur16@ru.is, benediktt16@ru.is"
 
-USER root
+ENV ASPNETCORE_URLS=http://+:7000
 
-ENV DB order-service/data/db
+COPY . /app
+WORKDIR /app
+
+RUN dotnet restore
+RUN dotnet build
+
+ENTRYPOINT [ "dotnet", "run" ]
 
 # RUN notað til að setja upp command skipanir sem á að runna þegar forritið startast
 
